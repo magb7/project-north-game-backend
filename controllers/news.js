@@ -4,7 +4,7 @@ const getAllNews = async (req, res) => {
   let sqlRequest = `SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news`;
   if (author) {
     console.log(author);
-    sqlRequest += ` WHERE author LIKE '%?%' `;
+    sqlRequest = ` WHERE author LIKE '%?%' `;
   }
   if (title) {
     console.log(title);
