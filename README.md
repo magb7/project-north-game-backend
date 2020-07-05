@@ -6,5 +6,6 @@
 - Creation of an schema.sql file in which you can replace the information concerning you
 
 - In the terminal: mysql -uroot -p < database/schema.sql
+  (you also can paste the file schema directly on your workbench)
 
 Use the npm start to run nodemon

@@ -13,4 +13,4 @@ CREATE TABLE `news` (
   `content` text,
   `picture_url` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+);
