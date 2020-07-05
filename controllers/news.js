@@ -1,29 +1,29 @@
 const { connection } = require("../conf");
 const getAllNews = async (req, res) => {
-  const { author, title } = req.query;
-
   try {
-    // get all news or searchbar for the news
-    const [data] = await connection.query([author, title]);
-
+    let { author = "", title = "" } = req.query;
+    let sqlRequest =
+      "SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news";
     if (author) {
-      console.log(author);
-      `SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news WHERE author LIKE '?%' `;
+      author = `${author}%`;
+      sqlRequest =
+        "SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news WHERE author LIKE ? OR title LIKE ?";
     }
-    // if (title) {
-    //   console.log(title);
-    //   sqlRequest += ` WHERE title LIKE '?%' `;
-    // }
+    if (title) {
+      title = `${title}%`;
+      sqlRequest =
+        "SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news WHERE author LIKE ? OR title LIKE ?";
+    }
+    // get all news or searchbar for the news
 
+    const [data] = await connection.query(sqlRequest, [author, title]);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
-    console.log("author", author);
 
     return res.status(500).send("Error while reading the news.");
   }
 };
-
 const getOneNews = async (req, res) => {
   const { id } = req.params;
   try {
