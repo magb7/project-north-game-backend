@@ -22,9 +22,9 @@ CREATE TABLE `event` (
   `adress` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `picture_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_published` tinyint NOT NULL,
-  `creation_date` datetime DEFAULT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `release_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
+);
