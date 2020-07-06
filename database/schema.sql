@@ -14,3 +14,17 @@ CREATE TABLE `news` (
   `picture_url` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `event` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `author` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_date` datetime NOT NULL,
+  `adress` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `picture_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_published` tinyint NOT NULL,
+  `creation_date` datetime DEFAULT NULL,
+  `release_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
