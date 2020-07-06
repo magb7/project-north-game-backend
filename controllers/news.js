@@ -27,7 +27,7 @@ const getAllNews = async (req, res) => {
 const getOneNews = async (req, res) => {
   const { id } = req.params;
   try {
-    // get all news
+    // get one news
     const [
       data,
     ] = await connection.query(

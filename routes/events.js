@@ -7,6 +7,6 @@ const newsController = require("../controllers/events");
 router.get("/", newsController.getAllEvents);
 
 // Get one news by the id
-// router.get("/:id", newsController.getOneEvent);
+router.get("/:id", newsController.getOneEvent);
 
 module.exports = router;

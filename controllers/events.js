@@ -33,4 +33,22 @@ const getAllEvents = async (req, res) => {
   }
 };
 
-module.exports = { getAllEvents };
+const getOneEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    // get one event
+    const [
+      data,
+    ] = await connection.query(
+      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE id = ?",
+      [id]
+    );
+
+    return res.status(200).send(data[0]);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while reading the event.");
+  }
+};
+
+module.exports = { getAllEvents, getOneEvent };
