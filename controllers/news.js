@@ -15,10 +15,12 @@ const getAllNews = async (req, res) => {
         "SELECT id, title, SUBSTR(content, 1, 100), picture_url as pictureUrl FROM news WHERE author LIKE ? OR title LIKE ?";
     }
     // get all news or searchbar for the news
+
     const [data] = await connection.query(sqlRequest, [author, title]);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
+
     return res.status(500).send("Error while reading the news.");
   }
 };
