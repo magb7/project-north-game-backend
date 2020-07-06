@@ -26,5 +26,7 @@ CREATE TABLE `event` (
   `is_published` tinyint NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `release_date` datetime DEFAULT NULL,
+  `event_latitude` float NOT NULL,
+  `event_longitude` float NOT NULL,
   PRIMARY KEY (`id`)
 );
