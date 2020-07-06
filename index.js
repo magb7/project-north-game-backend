@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 
 const news = require("./routes/news.js");
-const events = require("./route/events.js");
+const events = require("./routes/events.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
