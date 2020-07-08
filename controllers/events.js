@@ -25,7 +25,6 @@ const getAllEvents = async (req, res) => {
       minDate,
       maxDate,
     ]);
-    console.log(minDate, maxDate);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
