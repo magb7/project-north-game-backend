@@ -15,8 +15,6 @@ const getAllEvents = async (req, res) => {
       sqlRequest = sqlRequestQuery;
     }
     if (minDate && maxDate) {
-      minDate = `'${minDate}'`;
-      maxDate = `'${maxDate}'`;
       sqlRequest = sqlRequestQuery;
     }
     // get all events or searchbar for the event
@@ -27,7 +25,6 @@ const getAllEvents = async (req, res) => {
       minDate,
       maxDate,
     ]);
-    console.log(minDate, maxDate);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
