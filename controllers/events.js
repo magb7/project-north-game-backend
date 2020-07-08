@@ -15,8 +15,6 @@ const getAllEvents = async (req, res) => {
       sqlRequest = sqlRequestQuery;
     }
     if (minDate && maxDate) {
-      minDate = `'${minDate}'`;
-      maxDate = `'${maxDate}'`;
       sqlRequest = sqlRequestQuery;
     }
     // get all events or searchbar for the event
@@ -43,7 +41,7 @@ const getOneEvent = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE id = ?",
+      'SELECT id, title, DATE_FORMAT(event_date, "%D %b %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE id = ?',
       [id]
     );
 
