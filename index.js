@@ -14,10 +14,10 @@ app.use("/news", news);
 
 app.use("/events", events);
 
-app.listen(5000, (err) => {
+app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log("Erreur server");
   } else {
-    console.log("Server is listening on 5000");
+    console.log(`Server is listening on ${process.env.PORT}`);
   }
 });

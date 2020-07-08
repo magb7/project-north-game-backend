@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const newsController = require("../controllers/events");
+const eventController = require("../controllers/events");
 
 // Get all news
-router.get("/", newsController.getAllEvents);
+router.get("/", eventController.getAllEvents);
 
 // Get one news by the id
-router.get("/:id", newsController.getOneEvent);
+router.get("/:id", eventController.getOneEvent);
 
 module.exports = router;

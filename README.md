@@ -8,4 +8,4 @@
 - In the terminal: mysql -uroot -p < database/schema.sql
   (you also can paste the file schema directly on your workbench)
 
-Use the npm start to run nodemon
+Use the command nodemon index.js to run the server

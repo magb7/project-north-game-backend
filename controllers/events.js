@@ -1,11 +1,11 @@
 const { connection } = require("../conf");
 const getAllEvents = async (req, res) => {
   try {
-    let { author = "", title = "", eventDate = "" } = req.query;
+    let { author = "", title = "", minDate = "", maxDate = "" } = req.query;
     let sqlRequest =
       "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event";
     const sqlRequestQuery =
-      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE author LIKE ? OR title LIKE ? OR MONTH(event_date) =? AND YEAR(event_date) = YEAR(CURRENT_DATE)";
+      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE author LIKE ? OR title LIKE ? OR event_date BETWEEN ? AND ?";
     if (author) {
       author = `${author}%`;
       sqlRequest = sqlRequestQuery;
@@ -14,8 +14,9 @@ const getAllEvents = async (req, res) => {
       title = `${title}%`;
       sqlRequest = sqlRequestQuery;
     }
-    if (eventDate) {
-      dateEvent = `%${eventDate}%`;
+    if (minDate && maxDate) {
+      minDate = `'${minDate}'`;
+      maxDate = `'${maxDate}'`;
       sqlRequest = sqlRequestQuery;
     }
     // get all events or searchbar for the event
@@ -23,8 +24,10 @@ const getAllEvents = async (req, res) => {
     const [data] = await connection.query(sqlRequest, [
       author,
       title,
-      eventDate,
+      minDate,
+      maxDate,
     ]);
+    console.log(minDate, maxDate);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
