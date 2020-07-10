@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 // Router
 app.use("/news", news);
 app.use("/events", events);
-app.use("/auth", auth);
+// app.use("/auth", auth);
 
 app.listen(process.env.PORT, (err) => {
   if (err) {
