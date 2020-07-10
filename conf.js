@@ -10,4 +10,6 @@ const connection = mysql.createPool({
   connectionLimit: 5,
 });
 
-module.exports = { connection };
+const tokenSecret = TOKEN_SECRET;
+
+module.exports = { connection, tokenSecret };
