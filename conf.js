@@ -1,6 +1,12 @@
 const mysql = require("mysql2/promise");
 
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
+const {
+  DB_HOST,
+  DB_USER,
+  DB_PASSWORD,
+  DB_DATABASE,
+  TOKEN_SECRET,
+} = process.env;
 
 const connection = mysql.createPool({
   host: DB_HOST,
