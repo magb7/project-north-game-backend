@@ -8,8 +8,7 @@ const createUser = (req, res) => {
 
   // Insertion in database
   connection.query(
-    "INSERT INTO user SET ? AND registration_date = NOW()",
-    [req.body],
+    `INSERT INTO user (name, mail, password, registration_date) VALUES ('${req.body.name}','${req.body.mail}','${req.body.password}', NOW())`,
     (errReq, resReq) => {
       if (errReq) {
         console.log(errReq.sql);
