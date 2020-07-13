@@ -45,4 +45,4 @@ CREATE TABLE `round` (
   `is_private` tinyint(4) NOT NULL,
   `player_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`));
