@@ -34,10 +34,15 @@ CREATE TABLE `event` (
 CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `type` varchar(45) DEFAULT NULL,
   `image` varchar(500) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `player_id` int(11) DEFAULT NULL,
-  `admin_id` int(11) DEFAULT NULL,
-  `members_number` int(11) NOT NULL,
+  `revision_date` datetime DEFAULT NULL,
+  `max_players` int(11) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `user_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`));
