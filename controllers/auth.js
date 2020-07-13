@@ -30,8 +30,7 @@ const createUser = async (req, res) => {
     });
   } catch (err) {
     res.status(500).send("Error while creating user");
-    console.log(err.sql);
-    console.log(err.message);
+    console.log(err);
     return;
   }
 };
