@@ -1,6 +1,8 @@
 const { connection, tokenSecret } = require("../conf");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
+require("../passeport-stategies");
 
 const createUser = async (req, res) => {
   try {
@@ -34,4 +36,24 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const checkUser = async (req, res) => {
+  passport.authenticate("local", { session: false }, (err, user) => {
+    if (err) {
+      console.log("----");
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    if (!user) {
+      console.log("----");
+      console.log("No user found");
+      return res.sendStatus(500);
+    }
+    const token = jwt.sign(user, `${tokenSecret}`);
+    return res.status(200).send({
+      user,
+      token,
+    });
+  })(req, res);
+};
+
+module.exports = { createUser, checkUser };
