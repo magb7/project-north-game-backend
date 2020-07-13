@@ -6,8 +6,10 @@ const app = express();
 const news = require("./routes/news.js");
 const events = require("./routes/events.js");
 const auth = require("./routes/auth");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Router
