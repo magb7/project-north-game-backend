@@ -30,3 +30,16 @@ CREATE TABLE `event` (
   `event_longitude` float NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `mail` VARCHAR(96) NOT NULL,
+  `password` VARCHAR(192) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `registration_date` DATETIME NOT NULL,
+  `modification_date` DATETIME NULL,
+  `last_connection` DATETIME NULL,
+  `avatar_url` VARCHAR(288) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE);
+
