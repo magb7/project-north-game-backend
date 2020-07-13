@@ -30,3 +30,14 @@ CREATE TABLE `event` (
   `event_longitude` float NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `type` varchar(45) DEFAULT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `player_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `members_number` int(11) NOT NULL,
+  PRIMARY KEY (`id`));
