@@ -1,22 +1,22 @@
 const { connection } = require('../conf');
 const getAllRounds = async (req, res) => {
   try {
-    let { author = '', title = '' } = req.query;
+    let { name = '', place = '' } = req.query;
     let sqlRequest =
-      'SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM round';
-    if (author) {
-      author = `${author}%`;
+      'SELECT round.id AS roundId, user.name AS roundCreator, round.name AS roundName, DATE_FORMAT(round_date, "%D %b %Y" ) AS roundDate, place AS roundPlace, user.name AS roundCreator, image AS roundImage FROM round JOIN user ON author_id = user.id';
+    if (name) {
+      name = `${name}%`;
       sqlRequest =
-        'SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM round WHERE author LIKE ? OR title LIKE ?';
+        'SELECT round.id AS roundId, round.name AS roundName, SUBSTR(content, 1, 100) as roundContent, image AS roundImage FROM round WHERE name LIKE ? OR place LIKE ?';
     }
-    if (title) {
-      title = `${title}%`;
+    if (place) {
+      place = `${place}%`;
       sqlRequest =
-        'SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM round WHERE author LIKE ? OR title LIKE ?';
+        'SELECT round.id AS roundId, round.name AS roundName, SUBSTR(content, 1, 100) as roundContent, image AS roundImage FROM round WHERE name LIKE ? OR title LIKE ?';
     }
     // get all games or searchbar for the rounds
 
-    const [data] = await connection.query(sqlRequest, [author, title]);
+    const [data] = await connection.query(sqlRequest, [name, place]);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
@@ -31,7 +31,7 @@ const getOneRound = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      'SELECT id,DATE_FORMAT(creation_date, "%D %b %Y" ) as creationDate, revision_date as revisionDate, author, title, content, picture_url as pictureUrl FROM round WHERE id = ?',
+      'SELECT round.id AS roundId, user.name AS roundCreator, round.name AS roundName, DATE_FORMAT(round_date, "%D %b %Y" ) AS roundDate, place AS roundPlace, user.name AS roundCreator, image AS roundImage FROM round JOIN user ON author_id = user.id WHERE round.id = ?',
       [id]
     );
 
