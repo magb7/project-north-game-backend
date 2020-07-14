@@ -35,14 +35,26 @@ CREATE TABLE `round` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_id` int(11) DEFAULT NULL,
   `round_date` datetime NOT NULL,
-  `place` varchar(100) NOT NULL,
+  `place` varchar(100) DEFAULT NULL,
   `author_id` varchar(45) NOT NULL,
   `image` varchar(500) DEFAULT NULL,
-  `players_number` int(11) NOT NULL,
+  `max_players` int(11) NOT NULL,
   `content` varchar(2000) DEFAULT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `revision_date` datetime DEFAULT NULL,
-  `is_private` tinyint(4) NOT NULL,
-  `player_id` int(11) NOT NULL,
+  `is_private` tinyint(1) NOT NULL,
   `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `user_round` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `content` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`));
