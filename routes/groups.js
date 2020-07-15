@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const newsController = require("../controllers/group");
+const newsController = require("../controllers/groups");
 
 // Get all news
 router.get("/", newsController.getAllGroup);

@@ -1,25 +1,27 @@
 const { connection } = require("../conf");
 const getAllGroup = async (req, res) => {
   try {
-    let { author_id = "", name = "" } = req.query;
+    let { authorId = "", name = "" } = req.query;
     let sqlRequest =
-      "SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM news";
-    if (author) {
-      author = `${author_id}%`;
-      sqlRequest = "SELECT  FROM group WHERE author LIKE ? OR name LIKE ?";
+      "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group";
+    if (authorId) {
+      authorId = `${author_id}%`;
+      sqlRequest =
+        "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group WHERE author LIKE ? OR name LIKE ?";
     }
     if (name) {
       name = `${name}%`;
-      sqlRequest = "SELECT  FROM group WHERE author LIKE ? OR name LIKE ?";
+      sqlRequest =
+        "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group WHERE author LIKE ? OR name LIKE ?";
     }
     // get all group or searchbar for the group
 
-    const [data] = await connection.query(sqlRequest, [author_id, name]);
+    const [data] = await connection.query(sqlRequest, [authorId, name]);
     return res.status(200).send(data);
   } catch (e) {
     console.log(e);
 
-    return res.status(500).send("Error while reading the news.");
+    return res.status(500).send("Error while reading the groups.");
   }
 };
 const getOneGroup = async (req, res) => {
@@ -33,7 +35,7 @@ const getOneGroup = async (req, res) => {
     return res.status(200).send(data[0]);
   } catch (e) {
     console.log(e);
-    return res.status(500).send("Error while reading the news.");
+    return res.status(500).send("Error while reading the groups.");
   }
 };
 
