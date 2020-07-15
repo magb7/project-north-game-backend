@@ -1,18 +1,18 @@
 const { connection } = require("../conf");
-const getAllGroup = async (req, res) => {
+const getAllGroups = async (req, res) => {
   try {
     let { authorId = "", name = "" } = req.query;
     let sqlRequest =
-      "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group";
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group";
     if (authorId) {
-      authorId = `${author_id}%`;
+      authorId = `${authorId}%`;
       sqlRequest =
-        "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group WHERE author LIKE ? OR name LIKE ?";
+        "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ?";
     }
     if (name) {
       name = `${name}%`;
       sqlRequest =
-        "SELECT id, name, image, author_id AS authorId, creation_date AS creationDate, max_player AS maxPLayer FROM group WHERE author LIKE ? OR name LIKE ?";
+        "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ?";
     }
     // get all group or searchbar for the group
 
@@ -28,9 +28,12 @@ const getOneGroup = async (req, res) => {
   const { id } = req.params;
   try {
     // get one group
-    const [data] = await connection.query("SELECT  FROM group WHERE id = ?", [
-      id,
-    ]);
+    const [
+      data,
+    ] = await connection.query(
+      "SELECT  group.id as groupId, group.name as groupName, group.image as groupImage, group.author_id as groupAuthor, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group_id = ?",
+      [id]
+    );
 
     return res.status(200).send(data[0]);
   } catch (e) {
@@ -39,4 +42,4 @@ const getOneGroup = async (req, res) => {
   }
 };
 
-module.exports = { getAllGroup, getOneGroup };
+module.exports = { getAllGroups, getOneGroup };

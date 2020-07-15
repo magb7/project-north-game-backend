@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const newsController = require("../controllers/groups");
+const groupController = require("../controllers/groups");
 
-// Get all news
-router.get("/", newsController.getAllGroup);
+// Get all groups
+router.get("/", groupController.getAllGroups);
 
-// Get one news by the id
-router.get("/:id", newsController.getOneGroup);
+// Get one group by the id
+router.get("/:id", groupController.getOneGroup);
 
 module.exports = router;
