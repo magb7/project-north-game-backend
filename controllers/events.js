@@ -1,3 +1,6 @@
+const passport = require("passport");
+const express = require("express");
+const router = express.Router();
 const { connection } = require("../conf");
 const getAllEvents = async (req, res) => {
   try {
@@ -51,4 +54,34 @@ const getOneEvent = async (req, res) => {
   }
 };
 
-module.exports = { getAllEvents, getOneEvent };
+// -------------------- Auth wall
+router.use((req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
+    if (err) {
+      console.log("----");
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!user) {
+      console.log("----");
+      console.log("No user found");
+      return res.sendStatus(500);
+    }
+    //req.user = user;
+    next();
+  })(req, res);
+});
+// -------------------- / Auth wall
+
+const createEvent = async (req, res) => {
+  try {
+    const event = await connection.query("INSERT INTO event SET ?", [req.body]);
+
+    return res.status(200).send(event);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while creating the event.");
+  }
+};
+
+module.exports = { getAllEvents, getOneEvent, createEvent };
