@@ -4,19 +4,18 @@ const getAllGroups = async (req, res) => {
     let { authorId = "", name = "", maxPlayer = "" } = req.query;
     let sqlRequest =
       "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group";
+    const sqlRequestQuery =
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
     if (authorId) {
       authorId = `${authorId}%`;
-      sqlRequest =
-        "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
+      sqlRequest = sqlRequestQuery;
     }
     if (name) {
       name = `${name}%`;
-      sqlRequest =
-        "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id LIKE ? OR name LIKE ? OR max_players <= ?";
+      sqlRequest = sqlRequestQuery;
     }
     if (maxPlayer) {
-      sqlRequest =
-        "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE max_players <= ? OR name LIKE ? OR author_id LIKE ?;";
+      sqlRequest = sqlRequestQuery;
     }
 
     // get all group or searchbar for the group
