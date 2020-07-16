@@ -1,6 +1,7 @@
 const { connection } = require("../conf");
-const router = express.Router();
 const passport = require("passport");
+const express = require("express");
+const router = express.Router();
 
 const getAllNews = async (req, res) => {
   try {
