@@ -10,9 +10,9 @@ const getAllRounds = async (req, res) => {
         'SELECT round.id AS roundId, round.name AS roundName, SUBSTR(content, 1, 100) as roundContent, image AS roundImage FROM round WHERE name LIKE ? OR place LIKE ?';
     }
     if (place) {
-      place = `${place}%`;
+      place = `%${place}%`;
       sqlRequest =
-        'SELECT round.id AS roundId, round.name AS roundName, SUBSTR(content, 1, 100) as roundContent, image AS roundImage FROM round WHERE name LIKE ? OR title LIKE ?';
+        'SELECT round.id AS roundId, round.name AS roundName, SUBSTR(content, 1, 100) as roundContent, image AS roundImage FROM round WHERE name LIKE ? OR place LIKE ?';
     }
     // get all games or searchbar for the rounds
 
@@ -21,7 +21,7 @@ const getAllRounds = async (req, res) => {
   } catch (e) {
     console.log(e);
 
-    return res.status(500).send('Error while reading te rounds.');
+    return res.status(500).send('Error while reading the rounds.');
   }
 };
 const getOneRound = async (req, res) => {
