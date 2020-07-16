@@ -42,4 +42,24 @@ const getOneNews = async (req, res) => {
   }
 };
 
-module.exports = { getAllNews, getOneNews };
+const postNews = async (req, res) => {
+  const formdata = req.body;
+  //post one news
+  try {
+    await connection.query("INSERT INTO news SET ?", formdata);
+
+    const news = {
+      title: req.body.title,
+      author: req.body.author,
+      content: req.body.content,
+      creationDate: req.body.creation_date,
+      pictureUrl: req.body.picture_url,
+    };
+    return res.status(200).send({ news });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while reading the news.");
+  }
+};
+
+module.exports = { getAllNews, getOneNews, postNews };
