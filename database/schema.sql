@@ -46,11 +46,15 @@ CREATE TABLE `round` (
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`));
 
-  CREATE TABLE `user_round` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `round_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`));
+  CREATE TABLE `user_rounder` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `round_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_round_user_idx` (`user_id`),
+  KEY `fk_user_round_round1_idx` (`round_id`),
+  CONSTRAINT `fk_user_round_round1` FOREIGN KEY (`round_id`) REFERENCES `round` (`id`),
+  CONSTRAINT `fk_user_round_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`));
 
   CREATE TABLE `game` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

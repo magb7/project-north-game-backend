@@ -3,7 +3,7 @@ const getAllRounds = async (req, res) => {
   try {
     let { name = '', place = '' } = req.query;
     let sqlRequest =
-      'SELECT round.id AS roundId, user.name AS roundCreator, round.name AS roundName, DATE_FORMAT(round_date, "%D %b %Y" ) AS roundDate, place AS roundPlace, user.name AS roundCreator, image AS roundImage FROM round JOIN user ON author_id = user.id';
+      'SELECT round.id AS roundId, user.name AS roundCreator, SUBSTR(round.name, 1, 50) AS roundName, DATE_FORMAT(round_date, "%D %b %Y" ) AS roundDate, place AS roundPlace, round.image AS roundImage, game.name AS gameName FROM round JOIN user ON author_id = user.id JOIN game ON game.id=round.game_id';
     if (name) {
       name = `${name}%`;
       sqlRequest =
@@ -21,7 +21,7 @@ const getAllRounds = async (req, res) => {
   } catch (e) {
     console.log(e);
 
-    return res.status(500).send('Error while reading the rounds.');
+    return res.status(500).send('Error while reading te rounds.');
   }
 };
 const getOneRound = async (req, res) => {
