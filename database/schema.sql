@@ -31,6 +31,27 @@ CREATE TABLE `event` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `revision_date` datetime DEFAULT NULL,
+  `max_players` int(11) NOT NULL,
+  PRIMARY KEY (`id`));
+
+ CREATE TABLE `user_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_group_user_idx` (`user_id`),
+  KEY `fk_user_group_group1_idx` (`group_id`),
+  CONSTRAINT `fk_user_group_group1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`),
+  CONSTRAINT `fk_user_group_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+);
+
 CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `mail` VARCHAR(96) NOT NULL,

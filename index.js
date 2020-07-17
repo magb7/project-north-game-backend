@@ -2,11 +2,12 @@ require("dotenv").config();
 const express = require("express");
 
 const app = express();
-
 const news = require("./routes/news.js");
 const events = require("./routes/events.js");
+const groups = require("./routes/groups.js");
 const auth = require("./routes/auth");
 const cors = require("cors");
+
 
 app.use(express.json());
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/news", news);
 app.use("/events", events);
 app.use("/auth", auth);
+app.use("/groups", groups);
 
 app.listen(process.env.PORT, (err) => {
   if (err) {
