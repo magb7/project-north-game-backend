@@ -51,3 +51,16 @@ CREATE TABLE `group` (
   CONSTRAINT `fk_user_group_group1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`),
   CONSTRAINT `fk_user_group_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
+
+CREATE TABLE `user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `mail` VARCHAR(96) NOT NULL,
+  `password` VARCHAR(192) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `registration_date` DATETIME NOT NULL,
+  `modification_date` DATETIME NULL,
+  `last_connection` DATETIME NULL,
+  `avatar_url` VARCHAR(288) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE);
+

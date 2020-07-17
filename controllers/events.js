@@ -3,9 +3,9 @@ const getAllEvents = async (req, res) => {
   try {
     let { author = "", title = "", minDate = "", maxDate = "" } = req.query;
     let sqlRequest =
-      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event";
+      'SELECT id, title, DATE_FORMAT(event_date, "%D %b %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event';
     const sqlRequestQuery =
-      "SELECT id, title, event_date as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE author LIKE ? OR title LIKE ? OR event_date BETWEEN ? AND ?";
+      'SELECT id, title, DATE_FORMAT(event_date, "%D %b %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE author LIKE ? OR title LIKE ? OR event_date BETWEEN ? AND ?';
     if (author) {
       author = `${author}%`;
       sqlRequest = sqlRequestQuery;
