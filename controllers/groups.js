@@ -44,7 +44,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, group.author_id as groupAuthor, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group_id = ?",
+      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, user.name as groupAuthor, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group_id = ?",
       [id]
     );
 
@@ -68,7 +68,6 @@ router.use((req, res, next) => {
       console.log("No user found");
       return res.sendStatus(500);
     }
-    //req.user = user;
     next();
   })(req, res);
 });
