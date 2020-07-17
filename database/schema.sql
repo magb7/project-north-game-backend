@@ -64,14 +64,17 @@ CREATE TABLE `round` (
   PRIMARY KEY (`id`));
 
 CREATE TABLE `group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `image` varchar(500) DEFAULT NULL,
-  `author_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `revision_date` datetime DEFAULT NULL,
-  `max_players` int(11) NOT NULL,
-  PRIMARY KEY (`id`));
+  `max_players` int NOT NULL,
+  `author_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_group_user1_idx` (`author_id`),
+  CONSTRAINT `fk_group_user1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
+);
 
  CREATE TABLE `user_group` (
   `id` int NOT NULL AUTO_INCREMENT,
