@@ -1,4 +1,8 @@
 const { connection } = require("../conf");
+const passport = require("passport");
+const express = require("express");
+const router = express.Router();
+
 const getAllGroups = async (req, res) => {
   try {
     let { authorId = "", name = "", maxPlayer = "" } = req.query;
@@ -51,4 +55,42 @@ const getOneGroup = async (req, res) => {
   }
 };
 
-module.exports = { getAllGroups, getOneGroup };
+// -------------------- Auth wall
+router.use((req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
+    if (err) {
+      console.log("----");
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!user) {
+      console.log("----");
+      console.log("No user found");
+      return res.sendStatus(500);
+    }
+    //req.user = user;
+    next();
+  })(req, res);
+});
+// -------------------- / Auth wall
+const postGroup = async (req, res) => {
+  const formdata = req.body;
+  //post one group
+  try {
+    await connection.query("INSERT INTO northgame.group SET ?", formdata);
+
+    const group = {
+      name: req.body.name,
+      author: req.body.author_id,
+      maxPLayer: req.body.max_players,
+      creationDate: req.body.creation_date,
+      image: req.body.image,
+    };
+    return res.status(200).send({ group });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while adding the group.");
+  }
+};
+
+module.exports = { getAllGroups, getOneGroup, postGroup };
