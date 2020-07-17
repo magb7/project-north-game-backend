@@ -15,7 +15,7 @@ const getUserInfo = async (req, res) => {
     return res.status(200).send(data[0]);
   } catch (e) {
     console.log(e);
-    return res.status(500).send("Error while reading the news.");
+    return res.status(500).send("Error");
   }
 };
 
