@@ -7,9 +7,9 @@ const getAllGroups = async (req, res) => {
   try {
     let { authorId = "", name = "", maxPlayer = "" } = req.query;
     let sqlRequest =
-      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group";
+      "SELECT group.id AS groupId, group.name AS groupName, group.creation_date as creationDate, group.image AS groupImage , group.max_players AS maxPlayers, user.name as AuthorName FROM northgame.group JOIN northgame.user ON user.id=group.author_id  ";
     const sqlRequestQuery =
-      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
+      "SELECT group.id AS groupId, group.name AS groupName, group.creation_date as creationDate, group.image AS groupImage , group.max_players AS maxPlayers, user.name as AuthorName FROM northgame.group JOIN northgame.user ON user.id=group.author_id WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
     if (authorId) {
       authorId = `${authorId}%`;
       sqlRequest = sqlRequestQuery;
