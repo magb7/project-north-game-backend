@@ -40,7 +40,7 @@ const getOneEvent = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      'SELECT id, title, DATE_FORMAT(event_date, "%D %b %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE id = ?',
+      'SELECT id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, DATE_FORMAT(event_date, "%H:%i" ) as eventTime, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, author, picture_url as pictureUrl FROM event WHERE id = ?',
       [id]
     );
 
