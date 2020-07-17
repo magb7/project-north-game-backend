@@ -3,7 +3,7 @@ CREATE USER your_user_name@localhost IDENTIFIED BY 'your_passworld';
 GRANT ALL PRIVILEGES ON your_database_name.* TO your_user_name@localhost;
 use your_database_name;
 CREATE TABLE `news` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `creation_date` datetime DEFAULT NULL,
   `release_date` datetime DEFAULT NULL,
   `revision_date` datetime DEFAULT NULL,
@@ -32,13 +32,13 @@ CREATE TABLE `event` (
 );
 
 CREATE TABLE `round` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `game_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `game_id` int DEFAULT NULL,
   `round_date` datetime NOT NULL,
   `place` varchar(100) DEFAULT NULL,
   `author_id` varchar(45) NOT NULL,
   `image` varchar(500) DEFAULT NULL,
-  `max_players` int(11) NOT NULL,
+  `max_players` int NOT NULL,
   `content` varchar(2000) DEFAULT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `revision_date` datetime DEFAULT NULL,
@@ -57,20 +57,20 @@ CREATE TABLE `round` (
   CONSTRAINT `fk_user_round_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`));
 
   CREATE TABLE `game` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `image` varchar(500) DEFAULT NULL,
   `content` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `image` varchar(500) DEFAULT NULL,
-  `author_id` int(11) NOT NULL,
+  `author_id` int NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `revision_date` datetime DEFAULT NULL,
-  `max_players` int(11) NOT NULL,
+  `max_players` int NOT NULL,
   PRIMARY KEY (`id`));
 
  CREATE TABLE `user_group` (
