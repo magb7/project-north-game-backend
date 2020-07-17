@@ -31,6 +31,38 @@ CREATE TABLE `event` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `round` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_id` int(11) DEFAULT NULL,
+  `round_date` datetime NOT NULL,
+  `place` varchar(100) DEFAULT NULL,
+  `author_id` varchar(45) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `max_players` int(11) NOT NULL,
+  `content` varchar(2000) DEFAULT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `revision_date` datetime DEFAULT NULL,
+  `is_private` tinyint(1) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  CREATE TABLE `user_rounder` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `round_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_round_user_idx` (`user_id`),
+  KEY `fk_user_round_round1_idx` (`round_id`),
+  CONSTRAINT `fk_user_round_round1` FOREIGN KEY (`round_id`) REFERENCES `round` (`id`),
+  CONSTRAINT `fk_user_round_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`));
+
+  CREATE TABLE `game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `content` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
