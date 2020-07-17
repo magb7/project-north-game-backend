@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const checkUser = async (req, res) => {
+const checkUser = (req, res) => {
   passport.authenticate("local", { session: false }, (err, user) => {
     if (err) {
       console.log("----");
