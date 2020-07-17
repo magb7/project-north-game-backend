@@ -1,4 +1,8 @@
 const { connection } = require("../conf");
+const passport = require("passport");
+const express = require("express");
+const router = express.Router();
+
 const getAllNews = async (req, res) => {
   try {
     let { author = "", title = "" } = req.query;
@@ -41,5 +45,42 @@ const getOneNews = async (req, res) => {
     return res.status(500).send("Error while reading the news.");
   }
 };
+// -------------------- Auth wall
+router.use((req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
+    if (err) {
+      console.log("----");
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!user) {
+      console.log("----");
+      console.log("No user found");
+      return res.sendStatus(500);
+    }
+    //req.user = user;
+    next();
+  })(req, res);
+});
+// -------------------- / Auth wall
+const postNews = async (req, res) => {
+  const formdata = req.body;
+  //post one news
+  try {
+    await connection.query("INSERT INTO news SET ?", formdata);
 
-module.exports = { getAllNews, getOneNews };
+    const news = {
+      title: req.body.title,
+      author: req.body.author,
+      content: req.body.content,
+      creationDate: req.body.creation_date,
+      pictureUrl: req.body.picture_url,
+    };
+    return res.status(200).send({ news });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while reading the news.");
+  }
+};
+
+module.exports = { getAllNews, getOneNews, postNews };
