@@ -1,12 +1,32 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
-const newsController = require('../controllers/rounds');
+const newsController = require("../controllers/rounds");
+
+// -------------------- Auth wall
+router.use((req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
+    if (err) {
+      console.log("----");
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (!user) {
+      console.log("----");
+      console.log("No user found");
+      return res.sendStatus(500);
+    }
+    //req.user = user;
+    next();
+  })(req, res);
+});
+// -------------------- / Auth wall
 
 // Get all rounds
-router.get('/', newsController.getAllRounds);
+router.get("/", newsController.getAllRounds);
 
 // Get one round by the id
-router.get('/:id', newsController.getOneRound);
+router.get("/:id", newsController.getOneRound);
 
 module.exports = router;
