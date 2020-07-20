@@ -40,7 +40,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, user.name as groupAuthor, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group.id = ?",
+      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group.id = ? GROUP BY user.name",
       [id]
     );
 
