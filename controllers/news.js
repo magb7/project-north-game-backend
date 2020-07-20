@@ -9,14 +9,14 @@ const getAllNews = async (req, res) => {
     let sqlRequest =
       "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id";
     if (author) {
-      author = `${author}%`;
+      author = `${author}`;
       sqlRequest =
-        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id user.name LIKE ? OR title LIKE ?";
+        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id WHERE user.name = ? OR title LIKE ?";
     }
     if (title) {
       title = `${title}%`;
       sqlRequest =
-        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id WHERE user.name LIKE ? OR title LIKE ?";
+        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id WHERE user.name = ? OR title LIKE ?";
     }
     // get all news or searchbar for the news
 

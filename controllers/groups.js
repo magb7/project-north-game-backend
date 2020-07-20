@@ -1,13 +1,13 @@
 const { connection } = require("../conf");
 const getAllGroups = async (req, res) => {
   try {
-    let { authorId = "", name = "", maxPlayer = "" } = req.query;
+    let { author = "", name = "", maxPlayer = "" } = req.query;
     let sqlRequest =
       "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPLayer FROM northgame.group JOIN user ON user.id = author_id";
     const sqlRequestQuery =
-      "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPLayer FROM northgame.group JOIN user ON user.id = author_id WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
-    if (authorId) {
-      authorId = `${authorId}%`;
+      "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPLayer FROM northgame.group JOIN user ON user.id = author_id WHERE user.name = ? OR group.name LIKE ? OR max_players <= ?";
+    if (author) {
+      author = `${author}`;
       sqlRequest = sqlRequestQuery;
     }
     if (name) {
@@ -21,7 +21,7 @@ const getAllGroups = async (req, res) => {
     // get all group or searchbar for the group
 
     const [data] = await connection.query(sqlRequest, [
-      authorId,
+      author,
       name,
       maxPlayer,
     ]);
@@ -40,7 +40,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPLayer FROM northgame.group JOIN user ON user.id = author_id WHERE group_id = ?",
+      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, user.name as groupAuthor, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group.id = ?",
       [id]
     );
 
