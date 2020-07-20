@@ -1,11 +1,11 @@
 const { connection } = require("../conf");
 const getAllGroups = async (req, res) => {
   try {
-    let { authorId = "", name = "", maxPlayer = "" } = req.query;
+    let { author = "", name = "", maxPlayer = "" } = req.query;
     let sqlRequest =
-      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group";
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group`";
     const sqlRequestQuery =
-      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM northgame.group WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group` WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
     if (authorId) {
       authorId = `${authorId}%`;
       sqlRequest = sqlRequestQuery;
@@ -21,7 +21,7 @@ const getAllGroups = async (req, res) => {
     // get all group or searchbar for the group
 
     const [data] = await connection.query(sqlRequest, [
-      authorId,
+      author,
       name,
       maxPlayer,
     ]);

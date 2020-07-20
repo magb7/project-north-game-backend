@@ -10,7 +10,7 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
 
     // Insertion in database
-    const sqlRequest = `INSERT INTO user (name, mail, password, registration_date) VALUES ('${req.body.name}','${req.body.mail}','${req.body.password}', NOW())`;
+    const sqlRequest = `INSERT INTO user (name, mail, password) VALUES ('${req.body.name}','${req.body.mail}','${req.body.password}')`;
 
     const [resReq] = await connection.query(sqlRequest);
 
@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const checkUser = async (req, res) => {
+const checkUser = (req, res) => {
   passport.authenticate("local", { session: false }, (err, user) => {
     if (err) {
       console.log("----");

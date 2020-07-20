@@ -1,22 +1,20 @@
 const { connection } = require("../conf");
-const passport = require("passport");
 const express = require("express");
-const router = express.Router();
 
 const getAllNews = async (req, res) => {
   try {
     let { author = "", title = "" } = req.query;
     let sqlRequest =
-      "SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM news";
+      "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id";
     if (author) {
-      author = `${author}%`;
+      author = `${author}`;
       sqlRequest =
-        "SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM news WHERE author LIKE ? OR title LIKE ?";
+        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id WHERE user.name = ? OR title LIKE ?";
     }
     if (title) {
       title = `${title}%`;
       sqlRequest =
-        "SELECT id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl FROM news WHERE author LIKE ? OR title LIKE ?";
+        "SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, creation_date AS creationDate, is_published, user.name AS authorName FROM news JOIN user ON user.id = author_id WHERE user.name = ? OR title LIKE ?";
     }
     // get all news or searchbar for the news
 
@@ -35,7 +33,7 @@ const getOneNews = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      'SELECT id,DATE_FORMAT(creation_date, "%D %b %Y" ) as creationDate, release_date as releaseDate, revision_date as revisionDate, is_published as isPublished, author, title, content, picture_url as pictureUrl FROM news WHERE id = ?',
+      'SELECT news.id, DATE_FORMAT(creation_date, "%D %b %Y" ) as creationDate, release_date as releaseDate, revision_date as revisionDate, is_published as isPublished, user.name AS author, title, content, picture_url as pictureUrl FROM news JOIN user ON user.id= author_id WHERE news.id = ?',
       [id]
     );
 
@@ -45,24 +43,7 @@ const getOneNews = async (req, res) => {
     return res.status(500).send("Error while reading the news.");
   }
 };
-// -------------------- Auth wall
-router.use((req, res, next) => {
-  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
-    if (err) {
-      console.log("----");
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    if (!user) {
-      console.log("----");
-      console.log("No user found");
-      return res.sendStatus(500);
-    }
-    //req.user = user;
-    next();
-  })(req, res);
-});
-// -------------------- / Auth wall
+
 const postNews = async (req, res) => {
   const formdata = req.body;
   //post one news

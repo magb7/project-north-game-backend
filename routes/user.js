@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const newsController = require("../controllers/rounds");
+const userController = require("../controllers/user");
 
 // -------------------- Auth wall
 router.use((req, res, next) => {
@@ -23,10 +23,7 @@ router.use((req, res, next) => {
 });
 // -------------------- / Auth wall
 
-// Get all rounds
-router.get("/", newsController.getAllRounds);
-
-// Get one round by the id
-router.get("/:id", newsController.getOneRound);
+// Get user info
+router.get("/:id", userController.getUserInfo);
 
 module.exports = router;
