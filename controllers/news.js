@@ -1,7 +1,5 @@
 const { connection } = require("../conf");
-const passport = require("passport");
 const express = require("express");
-const router = express.Router();
 
 const getAllNews = async (req, res) => {
   try {
@@ -45,24 +43,7 @@ const getOneNews = async (req, res) => {
     return res.status(500).send("Error while reading the news.");
   }
 };
-// -------------------- Auth wall
-router.use((req, res, next) => {
-  passport.authenticate("jwt", { session: false }, (err, user, msg) => {
-    if (err) {
-      console.log("----");
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    if (!user) {
-      console.log("----");
-      console.log("No user found");
-      return res.sendStatus(500);
-    }
-    //req.user = user;
-    next();
-  })(req, res);
-});
-// -------------------- / Auth wall
+
 const postNews = async (req, res) => {
   const formdata = req.body;
   //post one news
