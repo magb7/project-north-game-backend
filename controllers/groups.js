@@ -40,7 +40,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id as groupId, group.name as name, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group.id = ?",
+      "SELECT group.id as groupId, group.name as name, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM user_group JOIN user ON user.id=user_group.user_id JOIN `group` ON group.id=user_group.group_id WHERE group.id = ?",
       [id]
     );
 
@@ -58,7 +58,7 @@ const getOneAuthor = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT user.name AS author FROM northgame.user JOIN northgame.group ON user.id=group.author_id WHERE group.id = ? AND user.id = author_id",
+      "SELECT user.name AS author FROM user JOIN `group` ON user.id=group.author_id WHERE group.id = ? AND user.id = author_id",
       [id]
     );
 
@@ -69,4 +69,20 @@ const getOneAuthor = async (req, res) => {
   }
 };
 
-module.exports = { getAllGroups, getOneGroup, getOneAuthor };
+const createOneGroup = async (req, res) => {
+  try {
+    await connection.query("INSERT INTO `group` SET ?", [req.body]);
+    const group = {
+      name: req.body.name,
+      image: req.body.image,
+      max_players: req.body.max_players,
+    };
+
+    return res.status(200).send({ group });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while creating the group.");
+  }
+};
+
+module.exports = { getAllGroups, getOneGroup, getOneAuthor, createOneGroup };
