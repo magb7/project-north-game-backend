@@ -3,11 +3,11 @@ const getAllGroups = async (req, res) => {
   try {
     let { author = "", name = "", maxPlayer = "" } = req.query;
     let sqlRequest =
-      "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPlayer FROM `group` JOIN user ON user.id = author_id";
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group`";
     const sqlRequestQuery =
-      "SELECT group.id, group.name, image, user.name AS authorName, creation_date as creationDate, max_players as maxPlayer FROM `group` JOIN user ON user.id = author_id WHERE user.name = ? OR group.name LIKE ? OR max_players <= ?";
-    if (author) {
-      author = `${author}`;
+      "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group` WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
+    if (authorId) {
+      authorId = `${authorId}%`;
       sqlRequest = sqlRequestQuery;
     }
     if (name) {
@@ -40,7 +40,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id as groupId, group.name as groupName, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM northgame.user_group JOIN northgame.user ON user.id=user_group.user_id JOIN northgame.group ON group.id=user_group.group_id WHERE group.id = ? GROUP BY user.name",
+      "SELECT  group.id as groupId, group.name as groupName, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM user_group JOIN user ON user.id=user_group.user_id JOIN `group` ON group.id=user_group.group_id WHERE group_id = ?",
       [id]
     );
 
