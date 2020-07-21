@@ -2,13 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const newsController = require("../controllers/news");
-
-// Get all news
-router.get("/", newsController.getAllNews);
-
-// Get one news by the id
-router.get("/:id", newsController.getOneNews);
+const userController = require("../controllers/user");
 
 // -------------------- Auth wall
 router.use((req, res, next) => {
@@ -29,7 +23,7 @@ router.use((req, res, next) => {
 });
 // -------------------- / Auth wall
 
-// Post one news
-router.post("/", newsController.postNews);
+// Get user info
+router.get("/:id", userController.getUserInfo);
 
 module.exports = router;

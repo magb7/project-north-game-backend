@@ -2,13 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const newsController = require("../controllers/news");
-
-// Get all news
-router.get("/", newsController.getAllNews);
-
-// Get one news by the id
-router.get("/:id", newsController.getOneNews);
+const newsController = require("../controllers/rounds");
 
 // -------------------- Auth wall
 router.use((req, res, next) => {
@@ -29,7 +23,10 @@ router.use((req, res, next) => {
 });
 // -------------------- / Auth wall
 
-// Post one news
-router.post("/", newsController.postNews);
+// Get all rounds
+router.get("/", newsController.getAllRounds);
+
+// Get one round by the id
+router.get("/:id", newsController.getOneRound);
 
 module.exports = router;

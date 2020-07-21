@@ -2,7 +2,8 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { Strategy: JWTStrategy, ExtractJwt } = require("passport-jwt");
-const { connection } = require("./conf");
+const { connection, tokenSecret } = require("./conf");
+
 passport.use(
   new LocalStrategy(
     {
@@ -43,11 +44,12 @@ passport.use(
   )
 );
 
+// JWT strategy
 passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "secret",
+      secretOrKey: `${tokenSecret}`,
     },
     (jwtPayload, done) => {
       const user = jwtPayload;
