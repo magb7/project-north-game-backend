@@ -34,10 +34,10 @@ const getOneRound = async (req, res) => {
        game.name AS gameName, game.image AS gameImage, game.content AS gameContent,
        user.name AS authorName, user.avatar_url AS authorAvatar,
        group.name AS groupName, group.max_players AS groupMaxPlayers
-       FROM northgame.round
+       FROM round
        JOIN game ON game.id = game_id
-       JOIN northgame.user ON user.id = author_id
-       JOIN northgame.group ON group.id = group_id
+       JOIN user ON user.id = author_id
+       JOIN group ON group.id = group_id
        WHERE round.id=?`,
       [id]
     );
