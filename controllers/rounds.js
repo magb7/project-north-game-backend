@@ -3,7 +3,7 @@ const getAllRounds = async (req, res) => {
   try {
     let { name = "", place = "" } = req.query;
     let sqlRequest =
-      'SELECT round.id AS roundId, user.name AS roundCreator, SUBSTR(round.name, 1, 50) AS roundName, DATE_FORMAT(round_date, "%D %b %Y" ) AS roundDate, place AS roundPlace, round.image AS roundImage, game.name AS gameName FROM round JOIN user ON author_id = user.id JOIN game ON game.id=round.game_id';
+      'SELECT round.id AS roundId, user.name AS roundCreator, SUBSTR(round.name, 1, 50) AS roundName, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, place AS roundPlace, round.image AS roundImage, game.name AS gameName FROM round JOIN user ON author_id = user.id JOIN game ON game.id=round.game_id';
     if (name) {
       name = `${name}%`;
       sqlRequest =
@@ -29,7 +29,7 @@ const getOneRound = async (req, res) => {
   try {
     // get one round
     const [data] = await connection.query(
-      `SELECT round.id AS roundId, round.name AS roundName,round.place AS place,round.content AS roundContent, DATE_FORMAT(round.round_date, "%D %b %Y" ) AS roundDate, DATE_FORMAT(round.round_date, "%H:%i" ) AS roundTime, DATE_FORMAT(round.creation_date, "%D %b %Y" ) AS creationDate, DATE_FORMAT(round.revision_date, "%D %b %Y" ) AS revisionDate, round.is_private, 
+      `SELECT round.id AS roundId, round.name AS roundName,round.place AS place,round.content AS roundContent, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, DATE_FORMAT(round.round_date, "%H:%i" ) AS roundTime, DATE_FORMAT(round.creation_date, "%D %b %Y" ) AS creationDate, DATE_FORMAT(round.revision_date, "%D %b %Y" ) AS revisionDate, round.is_private, 
        round.image AS roundImage,
        game.name AS gameName, game.image AS gameImage, game.content AS gameContent,
        user.name AS authorName, user.avatar_url AS authorAvatar,
