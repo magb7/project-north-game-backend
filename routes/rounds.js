@@ -17,7 +17,6 @@ router.use((req, res, next) => {
       console.log("No user found");
       return res.sendStatus(500);
     }
-    //req.user = user;
     next();
   })(req, res);
 });
