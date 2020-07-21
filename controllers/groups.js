@@ -6,8 +6,8 @@ const getAllGroups = async (req, res) => {
       "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group`";
     const sqlRequestQuery =
       "SELECT id, name, image, author_id as authorId, creation_date as creationDate, max_players as maxPLayer FROM `group` WHERE author_id = ? OR name LIKE ? OR max_players <= ?";
-    if (authorId) {
-      authorId = `${authorId}%`;
+    if (author) {
+      authorId = `${author}%`;
       sqlRequest = sqlRequestQuery;
     }
     if (name) {
