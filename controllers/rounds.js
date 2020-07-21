@@ -28,17 +28,10 @@ const getOneRound = async (req, res) => {
   const { id } = req.params;
   try {
     // get one round
-    const [data] = await connection.query(
-      `SELECT round.id AS roundId, round.name AS roundName,round.place AS place,round.content AS roundContent, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, DATE_FORMAT(round.round_date, "%H:%i" ) AS roundTime, DATE_FORMAT(round.creation_date, "%D %b %Y" ) AS creationDate, DATE_FORMAT(round.revision_date, "%D %b %Y" ) AS revisionDate, round.is_private, 
-       round.image AS roundImage,
-       game.name AS gameName, game.image AS gameImage, game.content AS gameContent,
-       user.name AS authorName, user.avatar_url AS authorAvatar,
-       group.name AS groupName, group.max_players AS groupMaxPlayers
-       FROM round
-       JOIN game ON game.id = game_id
-       JOIN user ON user.id = author_id
-       JOIN group ON group.id = group_id
-       WHERE round.id=?`,
+    const [
+      data,
+    ] = await connection.query(
+      'SELECT round.id AS roundId, round.name AS roundName,round.place AS place,round.content AS roundContent, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, DATE_FORMAT(round.round_date, "%H:%i" ) AS roundTime, DATE_FORMAT(round.creation_date, "%D %b %Y" ) AS creationDate, DATE_FORMAT(round.revision_date, "%D %b %Y" ) AS revisionDate, round.is_private, round.image AS roundImage,game.name AS gameName, game.image AS gameImage, game.content AS gameContent, user.name AS authorName, user.avatar_url AS authorAvatar, group.name AS groupName, group.max_players AS groupMaxPlayers FROM round JOIN game ON game.id = game_id JOIN `user` ON user.id = author_id JOIN `group` ON group.id = group_id WHERE round.id=?',
       [id]
     );
 
