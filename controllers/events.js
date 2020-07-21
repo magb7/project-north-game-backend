@@ -1,3 +1,5 @@
+const express = require("express");
+const router = express.Router();
 const { connection } = require("../conf");
 const getAllEvents = async (req, res) => {
   try {
@@ -51,4 +53,15 @@ const getOneEvent = async (req, res) => {
   }
 };
 
-module.exports = { getAllEvents, getOneEvent };
+const createEvent = async (req, res) => {
+  try {
+    const event = await connection.query("INSERT INTO event SET ?", [req.body]);
+
+    return res.status(200).send(event);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Error while creating the event.");
+  }
+};
+
+module.exports = { getAllEvents, getOneEvent, createEvent };
