@@ -28,4 +28,7 @@ router.get("/", groupController.getAllGroups);
 // Get one group by the id
 router.get("/:id", groupController.getOneGroup);
 
+// Get one author of group by the id
+router.get("/:id/author", groupController.getOneAuthor);
+
 module.exports = router;
