@@ -56,7 +56,6 @@ CREATE TABLE `news` (
   CONSTRAINT `fk_news_user1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
 );
 
-<<<<<<< HEAD
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `mail` varchar(96) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -68,7 +67,8 @@ CREATE TABLE `user` (
   `avatar_url` varchar(288) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `mail_UNIQUE` (`mail`)
-=======
+
+  
 CREATE TABLE `group` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -80,7 +80,6 @@ CREATE TABLE `group` (
   PRIMARY KEY (`id`),
   KEY `fk_group_user1_idx` (`author_id`),
   CONSTRAINT `fk_group_user1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
->>>>>>> b83216d8cadf13006aaf0a3dbc9ce5a431a3e1a0
 );
 
 CREATE TABLE `user_group` (

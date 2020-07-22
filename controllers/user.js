@@ -1,5 +1,4 @@
 const { connection } = require("../conf");
-const express = require("express");
 
 const getUserInfo = async (req, res) => {
   const { id } = req.params;
