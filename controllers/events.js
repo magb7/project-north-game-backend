@@ -3,9 +3,9 @@ const getAllEvents = async (req, res) => {
   try {
     let { author = "", title = "", minDate = "", maxDate = "" } = req.query;
     let sqlRequest =
-      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN user ON user.id = author_id';
+      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN `user` ON user.id = author_id';
     const sqlRequestQuery =
-      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN user ON user.id = author_id WHERE user.name = ? OR title LIKE ? OR event_date BETWEEN ? AND ?';
+      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN `user` ON user.id = author_id WHERE user.name = ? OR title LIKE ? OR event_date BETWEEN ? AND ?';
     if (author) {
       authorId = `${author}`;
       sqlRequest = sqlRequestQuery;
@@ -40,7 +40,7 @@ const getOneEvent = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, DATE_FORMAT(event_date, "%H:%i" ) as eventTime, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN user ON user.id = author_id WHERE event.id = ?',
+      'SELECT event.id, title, DATE_FORMAT(event_date, " %W, %d %M %Y" ) as eventDate, DATE_FORMAT(event_date, "%H:%i" ) as eventTime, adress, event_latitude as eventLatitude, event_longitude as eventLongitude, description, creation_date AS creationDate, is_published, user.name AS author, picture_url as pictureUrl FROM event JOIN `user` ON user.id = author_id WHERE event.id = ?',
       [id]
     );
 

@@ -10,9 +10,9 @@ const createUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 8);
 
     // Insertion in database
-    const sqlRequest = `INSERT INTO user (name, mail, password) VALUES ('${req.body.name}','${req.body.mail}','${req.body.password}')`;
-
-    const [resReq] = await connection.query(sqlRequest);
+    const [resReq] = await connection.query("INSERT INTO `user` SET ?", [
+      req.body,
+    ]);
 
     // Creation of a user to make token
     const user = {
