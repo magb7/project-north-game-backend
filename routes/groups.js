@@ -31,4 +31,7 @@ router.get("/:id", groupController.getOneGroup);
 // Get one author of group by the id
 router.get("/:id/author", groupController.getOneAuthor);
 
+// Post one group
+router.post("/", groupController.createOneGroup);
+
 module.exports = router;

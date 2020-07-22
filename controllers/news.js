@@ -1,5 +1,4 @@
 const { connection } = require("../conf");
-const express = require("express");
 
 const getAllNews = async (req, res) => {
   try {
@@ -54,6 +53,7 @@ const postNews = async (req, res) => {
       creationDate: req.body.creation_date,
       pictureUrl: req.body.picture_url,
     };
+
     return res.status(200).send({ news });
   } catch (e) {
     console.log(e);
