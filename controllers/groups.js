@@ -41,7 +41,7 @@ const getOneGroup = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT group.id as groupId, group.name as name, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM user_group JOIN user ON user.id=user_group.user_id JOIN `group` ON group.id=user_group.group_id WHERE group.id = ?",
+      "SELECT group.id as groupId, group.name as name, group.image as groupImage, group.creation_date as groupCreationDate, group.max_players as GroupMaxPlayers, COUNT(user.id) as numberOfPlayers FROM user_group JOIN `user` ON user.id=user_group.user_id JOIN `group` ON group.id=user_group.group_id WHERE group.id = ?",
       [id]
     );
 
@@ -72,7 +72,17 @@ const getOneAuthor = async (req, res) => {
 
 const createOneGroup = async (req, res) => {
   try {
-    await connection.query("INSERT INTO `group` SET ?", [req.body]);
+    const [resReq] = await connection.query("INSERT INTO `group` SET ?", [
+      req.body,
+    ]);
+
+    const userGroup = {
+      user_id: req.body.author_id,
+      group_id: resReq.insertId,
+    };
+
+    await connection.query("INSERT INTO user_group SET ?", [userGroup]);
+
     const group = {
       name: req.body.name,
       image: req.body.image,
