@@ -7,7 +7,7 @@ const getUserInfo = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT name, avatar_url as avatar FROM user WHERE id = ?",
+      "SELECT name, avatar_url as avatar FROM `user` WHERE id = ?",
       [id]
     );
 

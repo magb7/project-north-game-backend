@@ -3,7 +3,7 @@ const getAllRounds = async (req, res) => {
   try {
     let { name = "", place = "" } = req.query;
     let sqlRequest =
-      'SELECT round.id AS roundId, user.name AS roundCreator, SUBSTR(round.name, 1, 50) AS roundName, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, place AS roundPlace, round.image AS roundImage, game.name AS gameName FROM round JOIN user ON author_id = user.id JOIN game ON game.id=round.game_id';
+      'SELECT round.id AS roundId, user.name AS roundCreator, SUBSTR(round.name, 1, 50) AS roundName, DATE_FORMAT(round.round_date, " %W, %d %M %Y" )AS roundDate, place AS roundPlace, round.image AS roundImage, game.name AS gameName FROM round JOIN `user` ON author_id = user.id JOIN game ON game.id=round.game_id';
     if (name) {
       name = `${name}%`;
       sqlRequest =
