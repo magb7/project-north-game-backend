@@ -59,7 +59,7 @@ const getOneAuthor = async (req, res) => {
     const [
       data,
     ] = await connection.query(
-      "SELECT user.name AS author FROM user JOIN `group` ON user.id=group.author_id WHERE group.id = ? AND user.id = author_id",
+      "SELECT user.name AS author, user.avatar_url AS authorAvatar FROM user JOIN `group` ON user.id=group.author_id WHERE group.id = ? AND user.id = author_id",
       [id]
     );
 
