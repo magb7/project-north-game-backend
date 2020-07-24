@@ -4,7 +4,7 @@ const getAllNews = async (req, res) => {
   try {
     let { author = "", title = "" } = req.query;
     let sqlRequest =
-      'SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, DATE_FORMAT(creation_date, " %W, %d %M %Y" ) AS creationDate, is_published, user.name AS authorName FROM news JOIN `user` ON user.id = author_id';
+      'SELECT news.id, title, SUBSTR(content, 1, 100) as contenText, picture_url as pictureUrl, DATE_FORMAT(creation_date, " %W, %d %M %Y" ) AS creationDate, is_published, user.name AS authorName FROM news JOIN `user` ON user.id = author_id ORDER BY creation_date DESC';
     if (author) {
       author = `${author}`;
       sqlRequest =
