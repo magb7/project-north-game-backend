@@ -11,7 +11,7 @@ const getAllEvents = async (req, res) => {
       sqlRequest = sqlRequestQuery;
     }
     if (title) {
-      title = `${title}%`;
+      title = `%${title}%`;
       sqlRequest = sqlRequestQuery;
     }
     if (minDate && maxDate) {
