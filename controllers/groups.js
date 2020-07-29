@@ -12,7 +12,7 @@ const getAllGroups = async (req, res) => {
       sqlRequest = sqlRequestQuery;
     }
     if (name) {
-      name = `${name}%`;
+      name = `%${name}%`;
       sqlRequest = sqlRequestQuery;
     }
     if (maxPlayer) {
